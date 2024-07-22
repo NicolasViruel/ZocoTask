@@ -1,9 +1,10 @@
 //configuramos axios y su domino base
-import axios from 'axios'
+import axios from "axios";
+const url = import.meta.env.VITE_BACKEND;
 
 const instance = axios.create({
-    baseURL: 'http://localhost:4000/api',
-    withCredentials: true //para que establezca las cookies ahi
-})
+  baseURL: url,
+  withCredentials: true, //para que establezca las cookies ahi
+});
 
-export default instance
+export default instance;

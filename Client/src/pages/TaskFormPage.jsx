@@ -20,7 +20,7 @@ function TaskFormPage() {
         const task = await getTask(params.id);
         setValue("title", task.title);
         setValue("description", task.description);
-        setValue("date", dayjs(task.date).utc().format('YYYY-MM-DD'));
+        setValue("date", dayjs(task.date).utc().format("YYYY-MM-DD"));
       }
     }
     loadTask();
@@ -56,8 +56,10 @@ function TaskFormPage() {
           />
           <label htmlFor="description">Description</label>
           <textarea
+            disabled="none"
             rows="3"
             placeholder="Description"
+            style={{ resize: "none" }}
             {...register("description")}
             className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
           ></textarea>
