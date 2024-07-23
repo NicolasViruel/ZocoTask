@@ -1,19 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/user.controller");
+const authController = require("../controllers/auth.controller");
 const authRequired = require("../middlewares/validateToken");
 const validateSchema = require("../middlewares/validatorMiddleware");
 const { registerSchema, loginSchema } = require("../schemas/auth.schema");
 
-router.post("/register", validateSchema(registerSchema) , userController.register);
+router.post("/register", validateSchema(registerSchema) , authController.register);
 
-router.post("/login", validateSchema(loginSchema), userController.login);
+router.post("/login", validateSchema(loginSchema), authController.login);
 
-router.post("/logout", userController.logout);
+router.post("/logout", authController.logout);
 
-router.get("/verify", userController.verifyToken);
+router.get("/verify", authController.verifyToken);
 
-router.get("/profile", authRequired, userController.profile);
+router.get("/profile", authRequired, authController.profile);
 
 
 

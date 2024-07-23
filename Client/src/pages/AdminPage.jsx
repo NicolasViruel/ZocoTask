@@ -1,21 +1,21 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAdmin } from "../context/Admin.Context";
 
 function AdminPage() {
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { singup, errors: registerErrors } = useAuth();
+  const { errors: registerErrors } = useAuth();
+  const { addUser } = useAdmin();
   const navigate = useNavigate();
-  
 
   const onSubmit = handleSubmit(async (values) => {
-    singup(values);
-    navigate("/tasks");
+    addUser(values);
+    navigate("/users");
   });
   return (
     <div className="flex h-screen items-center justify-center">
@@ -58,17 +58,16 @@ function AdminPage() {
             <p className="text-red-500">Password is required</p>
           )}
 
-<select className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-{...register("role")}>
-  
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-      </select>
+          <select
+            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+            {...register("role")}
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
 
-      {/* definimos los errores */}
-      {errors.role && (
-            <p className="text-red-500">Role is required</p>
-          )}
+          {/* definimos los errores */}
+          {errors.role && <p className="text-red-500">Role is required</p>}
 
           <button
             type="submit"
@@ -79,7 +78,7 @@ function AdminPage() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default AdminPage
+export default AdminPage;

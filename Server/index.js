@@ -2,7 +2,6 @@ const express = require("express");
 require("dotenv").config();
 const app = express()
 const bodyParser = require("body-parser");
-// const cookieParser = require("cookie-parser");
 const cors = require('cors');
 
 //conectamos la base
@@ -19,7 +18,6 @@ app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
 }));
-// app.use(cookieParser());
 app.use(bodyParser.urlencoded( {extended:true} ));
 app.use(bodyParser.json());
 
