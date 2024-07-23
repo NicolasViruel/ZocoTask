@@ -4,7 +4,7 @@
 
 ## Herramientas Utilizadas🛠️
 ### Frontend
- React, Tailwind.CSS, axios, react-router-dom, react-hook-form, js-cookie, day.js
+ React, Tailwind.CSS, axios, react-router-dom, react-hook-form, day.js
 ### Backend
  Node.js, Express, Cors , Nodemon, MongoDB, dotenv, body-parser, jsonwebtoken, mongoose, zod
 
