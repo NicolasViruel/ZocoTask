@@ -12,6 +12,7 @@ conectarDB();
 //Routers
 const userRoutes = require("../Server/routes/auth.routes.js")
 const taskRoutes = require("../Server/routes/task.routes.js")
+const adminRoutes = require("../Server/routes/admin.routes.js")
 
 //body-parser - cors
 app.use(cors({
@@ -26,6 +27,7 @@ app.use(bodyParser.json());
 //ruta
 app.use('/api/users', userRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 const port = 4000

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const TOKEN_SECRET = require("../config");
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
   if (!email) return res.status(400).send({ msg: "Email is required" });
   if (!password)
     return res.status(400).send({ msg: "The password is required" });
@@ -22,6 +22,7 @@ const register = async (req, res) => {
       username,
       email,
       password: passwordHash,
+      role: role || 'user'
     });
 
     const userSaved = await newUser.save();
@@ -33,6 +34,7 @@ const register = async (req, res) => {
       id: userSaved._id,
       username: userSaved.username,
       email: userSaved.email,
+      role: userSaved.role,
       createAt: userSaved.createdAt,
       updateAt: userSaved.updatedAt,
     });
@@ -66,6 +68,7 @@ const login = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
+      role: userFound.role,
       createAt: userFound.createdAt,
       updateAt: userFound.updatedAt,
     });
@@ -89,6 +92,7 @@ const profile = async (req, res) => {
     id: userFound._id,
     username: userFound.username,
     email: userFound.email,
+    role: userSaved.role,
     createdAt: userFound.createdAt,
     updateAt: userFound.updatedAt,
   });
@@ -113,6 +117,7 @@ const verifyToken = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
+      role: userFound.role,
     });
   });
 };

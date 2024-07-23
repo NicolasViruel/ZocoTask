@@ -23,12 +23,16 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   //creamos un estado de carga
   const [loading, setLoading] = useState(true);
+  //creamos un estado para admin
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const singup = async (user) => {
     try {
       const res = await registerRequest(user);
-      
       setUser(res.data);
+      if (res.data.role == "admin") {
+        setIsAdmin(true);
+      }
       setIsAuthenticated(true);
     } catch (error) {
       
@@ -42,6 +46,9 @@ export const AuthProvider = ({ children }) => {
       
       setIsAuthenticated(true);
       setUser(res.data);
+      if (res.data.role == "admin") {
+        setIsAdmin(true);
+      }
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         return setErrors(error.response.data);
@@ -54,6 +61,7 @@ export const AuthProvider = ({ children }) => {
     Cookies.remove("token");
     setIsAuthenticated(false);
     setUser(null);
+    setIsAdmin(false);
   }
 
   //contador para minimizar los errores
@@ -88,6 +96,9 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
+        if (res.data.role == "admin") {
+          setIsAdmin(true);
+        }
         setIsAuthenticated(true);
         setUser(res.data);
         setLoading(false);
@@ -109,7 +120,8 @@ export const AuthProvider = ({ children }) => {
         user,
         isAuthenticated,
         errors,
-        logout
+        logout,
+        isAdmin
       }}
     >
       {children}

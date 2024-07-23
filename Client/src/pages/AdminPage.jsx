@@ -1,25 +1,22 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function RegisterPage() {
+function AdminPage() {
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { singup, isAuthenticated, errors: registerErrors } = useAuth();
+  const { singup, errors: registerErrors } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) navigate("/tasks");
-  }, [isAuthenticated]);
+  
 
   const onSubmit = handleSubmit(async (values) => {
     singup(values);
+    navigate("/tasks");
   });
-
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="bg-zinc-800 max-w-md p-10 rounded-md">
@@ -28,7 +25,7 @@ function RegisterPage() {
             {error}
           </div>
         ))}
-        <h1 className="text-3xl font-bold my-2">Register</h1>
+        <h1 className="text-3xl font-bold my-2">Add Users</h1>
         <form onSubmit={onSubmit}>
           <input
             type="text"
@@ -61,35 +58,28 @@ function RegisterPage() {
             <p className="text-red-500">Password is required</p>
           )}
 
-{/* <select className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+<select className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
 {...register("role")}>
   
         <option value="user">User</option>
         <option value="admin">Admin</option>
-      </select> */}
+      </select>
 
       {/* definimos los errores */}
-      {/* {errors.role && (
+      {errors.role && (
             <p className="text-red-500">Role is required</p>
-          )} */}
+          )}
 
           <button
             type="submit"
             className="bg-sky-500 text-white px-4 py-2 rounded-md my-2"
           >
-            Register
+            Create User
           </button>
         </form>
-
-        <p className="flex gap-x-2 justify-between">
-          Already have an account?{" "}
-          <Link to="/login" className="text-sky-500">
-            Login
-          </Link>
-        </p>
       </div>
     </div>
-  );
+  )
 }
 
-export default RegisterPage;
+export default AdminPage

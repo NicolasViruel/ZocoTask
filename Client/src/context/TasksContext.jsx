@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import {
   createTasksRequest,
   getTasksRequest,
@@ -22,14 +22,19 @@ export const useTasks = () => {
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
-  const getTasks = async () => {
-    try {
-      const res = await getTasksRequest();
-      setTasks(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
+  //utilizo el useCallBack para que el componente se vuelva a renderizar y lo guarda en memoria.
+  const getTasks = useCallback(
+    async () => {
+      try {
+        const res = await getTasksRequest();
+        setTasks(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [],
+  )
 
   const createTask = async (task) => {
     const res = await createTasksRequest(task);

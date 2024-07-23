@@ -9,9 +9,9 @@ function TaskCard({ task }) {
   const { deleteTask } = useTasks();
 
   return (
-    <div className="bg-zinc-800 max-w-full md:max-w-md w-full p-5 md:p-10 rounded-md">
+    <div className="bg-zinc-800 max-w-full w-full p-5 md:p-10 rounded-md">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center">
-        <h1 className="text-xl md:text-2xl font-bold overflow-hidden text-ellipsis whitespace-nowrap">
+        <h1 className="text-xl md:text-2xl font-bold overflow-hidden text-ellipsis">
           {task.title}
         </h1>
         <div className="flex gap-x-2 items-center mt-2 md:mt-0">
@@ -31,7 +31,9 @@ function TaskCard({ task }) {
           </Link>
         </div>
       </header>
-      <p className="text-slate-300 mt-2 md:mt-4">{task.description}</p>
+      <p className="text-slate-300 mt-2 md:mt-4 break-words">
+        {task.description}
+      </p>
       <p className="text-slate-400 mt-1 md:mt-2">
         {dayjs(task.date).utc().format("DD/MM/YYYY")}
       </p>

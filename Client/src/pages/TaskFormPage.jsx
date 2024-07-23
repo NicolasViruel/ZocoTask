@@ -56,7 +56,6 @@ function TaskFormPage() {
           />
           <label htmlFor="description">Description</label>
           <textarea
-            disabled="none"
             rows="3"
             placeholder="Description"
             style={{ resize: "none" }}
