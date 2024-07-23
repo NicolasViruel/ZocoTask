@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken"); 
 const TOKEN_SECRET = require("../config");
+const User = require("../models/user.model");
 
 const authRequired = (req, res, next) => {
     const token = req.headers['authorization'];
@@ -14,8 +15,28 @@ const authRequired = (req, res, next) => {
     });
   };
   
+  // const adminRequired = (req, res, next) => {
+  //   const token = req.headers['authorization'];
+  
+  //   if (!token) return res.status(401).json({ message: "Unauthorized, no token" });
+  
+  //   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+  //     if (err) return res.status(401).json({ message: "Unauthorized" });
+  
+  //     const userFound = await User.findById(user.id);
+  
+  //     if (!userFound || userFound.role !== 'admin') {
+  //       return res.status(403).json({ message: "Forbidden" });
+  //     }
+  
+  //     req.user = user;
+  //     next();
+  //   });
+  // };
+
   const adminRequired = (req, res, next) => {
-    const token = req.headers['authorization'];
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // me da token sin el prefijo 'Bearer'
   
     if (!token) return res.status(401).json({ message: "Unauthorized, no token" });
   

@@ -33,7 +33,6 @@ const addUser = async (req, res) => {
     const userSaved = await newUser.save();
 
     return res.status(200).json({
-      token,
       id: userSaved._id,
       username: userSaved.username,
       email: userSaved.email,
@@ -45,6 +44,7 @@ const addUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const updateUser = async (req, res) =>{
   const { id } = req.params;

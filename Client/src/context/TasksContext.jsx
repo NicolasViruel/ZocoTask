@@ -7,6 +7,7 @@ import {
   updateTasksRequest,
 } from "../api/tasks";
 import dayjs from "dayjs";
+import Swal from 'sweetalert2';
 
 const TaskContext = createContext();
 
@@ -37,20 +38,74 @@ export function TaskProvider({ children }) {
   }, []);
 
   const createTask = async (task) => {
-    const res = await createTasksRequest(task);
+    try {
+      const res = await createTasksRequest(task);
+      Swal.fire({
+        icon: 'success',
+        title: 'Task Created!',
+        text: 'Your task has been created successfully.',
+      });
+      //actualizar el estado de las tareas
+      // setTasks([...tasks, res.data]);
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to Create Task',
+        text: error.response?.data?.message || 'Please try again later.',
+      });
+    }
   };
 
+  // const deleteTask = async (id) => {
+  //   try {
+  //     const res = await deleteTasksRequest(id);
+  //     const newTasks = tasks.filter((task) => task._id !== id);
+  //     setTasks(newTasks);
+  //     setFilteredTasks(newTasks);
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: 'Task Deleted!',
+  //       text: 'The task has been deleted successfully.',
+  //     });
+  //   } catch (error) {
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Failed to Delete Task',
+  //       text: error.response?.data?.message || 'Please try again later.',
+  //     });
+  //   }
+  // };
+
   const deleteTask = async (id) => {
-    try {
-      const res = await deleteTasksRequest(id);
-      //creo un arreglo nuevo eliminando la tarea seleccionada
-      // if (res.status === 204) setTasks(tasks.filter((task) => task._id !== id));
-      const newTasks = tasks.filter((task) => task._id !== id);
-      setTasks(newTasks);
-      setFilteredTasks(newTasks);
-    } catch (error) {
-      console.log(error);
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await deleteTasksRequest(id);
+          const newTasks = tasks.filter((task) => task._id !== id);
+          setTasks(newTasks);
+          setFilteredTasks(newTasks);
+          Swal.fire({
+            icon: 'success',
+            title: 'Task Deleted!',
+            text: 'The task has been deleted successfully.',
+          });
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Failed to Delete Task',
+            text: error.response?.data?.message || 'Please try again later.',
+          });
+        }
+      }
+    });
   };
 
   const getTask = async (id) => {
@@ -58,20 +113,36 @@ export function TaskProvider({ children }) {
       const res = await getTaskRequest(id);
       return res.data;
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to Fetch Task',
+        text: error.response?.data?.message || 'Please try again later.',
+      });
     }
   };
 
   const updateTask = async (id, task) => {
     try {
       const res = await updateTasksRequest(id, task);
+      // actualizar el estado de las tareas
+      const updatedTasks = tasks.map(t => t._id === id ? res.data : t);
+      setTasks(updatedTasks);
+      Swal.fire({
+        icon: 'success',
+        title: 'Task Updated!',
+        text: 'The task has been updated successfully.',
+      });
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to Update Task',
+        text: error.response?.data?.message || 'Please try again later.',
+      });
     }
   };
+  
 
   const filterTasks = (title, date) => {
-    // console.log('Date:', date);
     //si los campos estan vacios que devuelva las tareas
     if (!title && !date) {
       setFilteredTasks(tasks);
@@ -86,7 +157,7 @@ export function TaskProvider({ children }) {
     }
     
     if (date) {
-      console.log('Filtering by date:', date);
+      console.log('Filtrando por date:', date);
       newFilteredTasks = newFilteredTasks.filter((task) => {
         //propiedad StartOf para que compare solo el dia y no agregue la hora.
         const taskDate = dayjs(task.date).startOf('day');

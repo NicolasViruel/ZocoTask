@@ -33,10 +33,8 @@ export function AdminProvider({ children }) {
   const addUser = useCallback(async (user) => {
     try {
       const res = await addUsersRequest(user);
-      setUsers((prevUsers) =>
-        prevUsers.map((u) => (u._id === id ? res.data : u))
-      );
-    } catch (error) {
+      setUsers((prevUsers) => [...prevUsers, res.data]);
+    }catch (error) {
       console.log(error);
     }
   }, []);

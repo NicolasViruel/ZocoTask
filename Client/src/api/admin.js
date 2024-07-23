@@ -2,7 +2,14 @@ import axios from "./axios";
 
 export const getUsersRequest = () => axios.get('/admin');
 
-export const addUsersRequest = (user) => axios.post('/admin', user);
+export const addUsersRequest = (user) => {
+    const token = localStorage.getItem('authToken');
+    return axios.post('/admin', user, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+};
 
 export const updateUsersRequest = (id, user) => axios.put(`/admin/${id}`, user);
 
