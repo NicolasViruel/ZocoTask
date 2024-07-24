@@ -24,13 +24,13 @@ function TaskFilter() {
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="px-4 py-2 rounded-md bg-zinc-700 text-white"
+        className="px-4 py-2 rounded-md bg-zinc-700 text-white hidden"
       />
 
       <button
-        type="button" // Cambiado a tipo "button" porque el submit ya no es necesario
+        type="button"
         onClick={() => filterTasks(title, date)}
-        className="px-4 py-2 rounded-md bg-sky-500 text-white"
+        className="px-4 py-2 rounded-md bg-sky-500 text-white hidden"
       >
         Filter
       </button>
