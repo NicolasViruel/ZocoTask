@@ -15,7 +15,7 @@ const adminRoutes = require("../Server/routes/admin.routes.js")
 
 //body-parser - cors
 app.use(cors({
-    // origin: 'https://zocotask.onrender.com/api/users/login',
+    // origin: 'http://localhost:5173',
     origin: 'https://66a0758d4c78b395b72e0025--dreamy-cendol-9cd611.netlify.app',
     credentials: true
 }));
