@@ -15,7 +15,7 @@ const adminRoutes = require("../Server/routes/admin.routes.js")
 
 //body-parser - cors
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://zocotask.onrender.com/api/users/login',
     credentials: true
 }));
 app.use(bodyParser.urlencoded( {extended:true} ));
