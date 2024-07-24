@@ -5,6 +5,7 @@ import {
   updateUsersRequest,
   deleteUsersRequest,
 } from "../api/admin";
+import Swal from 'sweetalert2';
 
 const AdminContext = createContext();
 
@@ -34,8 +35,19 @@ export function AdminProvider({ children }) {
     try {
       const res = await addUsersRequest(user);
       setUsers((prevUsers) => [...prevUsers, res.data]);
-    }catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'success',
+        title: 'User Added!',
+        text: 'The user has been added successfully.',
+      });
+    } catch (error) {
+      const errorMessage = error.response?.data?.[0] || 'Failed to add user, the email already exists. Please try again later.';
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: errorMessage,
+      });
+      throw error;
     }
   }, []);
 

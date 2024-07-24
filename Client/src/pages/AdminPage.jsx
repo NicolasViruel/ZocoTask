@@ -14,9 +14,10 @@ function AdminPage() {
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async (values) => {
-    addUser(values);
+    await addUser(values);
     navigate("/users");
   });
+
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="bg-zinc-800 max-w-md p-10 rounded-md">
@@ -33,7 +34,6 @@ function AdminPage() {
             className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
             placeholder="Username"
           />
-          {/* definimos los errores */}
           {errors.username && (
             <p className="text-red-500">Username is required</p>
           )}
@@ -44,7 +44,6 @@ function AdminPage() {
             className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
             placeholder="Email"
           />
-          {/* definimos los errores */}
           {errors.email && <p className="text-red-500">Email is required</p>}
 
           <input
@@ -53,7 +52,6 @@ function AdminPage() {
             className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
             placeholder="Password"
           />
-          {/* definimos los errores */}
           {errors.password && (
             <p className="text-red-500">Password is required</p>
           )}
@@ -66,7 +64,6 @@ function AdminPage() {
             <option value="admin">Admin</option>
           </select>
 
-          {/* definimos los errores */}
           {errors.role && <p className="text-red-500">Role is required</p>}
 
           <button

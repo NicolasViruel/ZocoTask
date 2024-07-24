@@ -7,7 +7,7 @@ import {
   updateTasksRequest,
 } from "../api/tasks";
 import dayjs from "dayjs";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const TaskContext = createContext();
 
@@ -41,40 +41,20 @@ export function TaskProvider({ children }) {
     try {
       const res = await createTasksRequest(task);
       Swal.fire({
-        icon: 'success',
-        title: 'Task Created!',
-        text: 'Your task has been created successfully.',
+        icon: "success",
+        title: "Task Created!",
+        text: "Your task has been created successfully.",
       });
       //actualizar el estado de las tareas
       // setTasks([...tasks, res.data]);
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Failed to Create Task',
-        text: error.response?.data?.message || 'Please try again later.',
+        icon: "error",
+        title: "Failed to Create Task",
+        text: error.response?.data?.message || "Please try again later.",
       });
     }
   };
-
-  // const deleteTask = async (id) => {
-  //   try {
-  //     const res = await deleteTasksRequest(id);
-  //     const newTasks = tasks.filter((task) => task._id !== id);
-  //     setTasks(newTasks);
-  //     setFilteredTasks(newTasks);
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: 'Task Deleted!',
-  //       text: 'The task has been deleted successfully.',
-  //     });
-  //   } catch (error) {
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Failed to Delete Task',
-  //       text: error.response?.data?.message || 'Please try again later.',
-  //     });
-  //   }
-  // };
 
   const deleteTask = async (id) => {
     Swal.fire({
@@ -84,7 +64,7 @@ export function TaskProvider({ children }) {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -93,15 +73,15 @@ export function TaskProvider({ children }) {
           setTasks(newTasks);
           setFilteredTasks(newTasks);
           Swal.fire({
-            icon: 'success',
-            title: 'Task Deleted!',
-            text: 'The task has been deleted successfully.',
+            icon: "success",
+            title: "Task Deleted!",
+            text: "The task has been deleted successfully.",
           });
         } catch (error) {
           Swal.fire({
-            icon: 'error',
-            title: 'Failed to Delete Task',
-            text: error.response?.data?.message || 'Please try again later.',
+            icon: "error",
+            title: "Failed to Delete Task",
+            text: error.response?.data?.message || "Please try again later.",
           });
         }
       }
@@ -114,9 +94,9 @@ export function TaskProvider({ children }) {
       return res.data;
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Failed to Fetch Task',
-        text: error.response?.data?.message || 'Please try again later.',
+        icon: "error",
+        title: "Failed to Fetch Task",
+        text: error.response?.data?.message || "Please try again later.",
       });
     }
   };
@@ -125,22 +105,21 @@ export function TaskProvider({ children }) {
     try {
       const res = await updateTasksRequest(id, task);
       // actualizar el estado de las tareas
-      const updatedTasks = tasks.map(t => t._id === id ? res.data : t);
+      const updatedTasks = tasks.map((t) => (t._id === id ? res.data : t));
       setTasks(updatedTasks);
       Swal.fire({
-        icon: 'success',
-        title: 'Task Updated!',
-        text: 'The task has been updated successfully.',
+        icon: "success",
+        title: "Task Updated!",
+        text: "The task has been updated successfully.",
       });
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Failed to Update Task',
-        text: error.response?.data?.message || 'Please try again later.',
+        icon: "error",
+        title: "Failed to Update Task",
+        text: error.response?.data?.message || "Please try again later.",
       });
     }
   };
-  
 
   const filterTasks = (title, date) => {
     //si los campos estan vacios que devuelva las tareas
@@ -155,15 +134,15 @@ export function TaskProvider({ children }) {
         task.title.toLowerCase().includes(title.toLowerCase())
       );
     }
-    
+
     if (date) {
-      console.log('Filtrando por date:', date);
+      console.log("Filtrando por date:", date);
       newFilteredTasks = newFilteredTasks.filter((task) => {
         //propiedad StartOf para que compare solo el dia y no agregue la hora.
-        const taskDate = dayjs(task.date).startOf('day');
-        const inputDate = dayjs(date).startOf('day');
+        const taskDate = dayjs(task.date).startOf("day");
+        const inputDate = dayjs(date).startOf("day");
         // console.log(`dato de la tarea: ${taskDate.format('YYYY-MM-DD')}, dato del input: ${inputDate.format('YYYY-MM-DD')}`);
-        return taskDate.isSame(inputDate, 'day');
+        return taskDate.isSame(inputDate, "day");
       });
     }
     setFilteredTasks(newFilteredTasks);

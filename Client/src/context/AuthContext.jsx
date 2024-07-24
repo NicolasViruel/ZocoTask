@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export const AuthContext = createContext();
 
@@ -32,16 +32,16 @@ export const AuthProvider = ({ children }) => {
       }
       setIsAuthenticated(true);
       Swal.fire({
-        icon: 'success',
-        title: 'Registered successfully!',
-        text: 'Welcome!',
+        icon: "success",
+        title: "Registered successfully!",
+        text: "Welcome!",
       });
     } catch (error) {
       setErrors(error.response.data);
       Swal.fire({
-        icon: 'error',
-        title: 'Registration failed',
-        text: error.response.data.message || 'Please try again later.',
+        icon: "error",
+        title: "Registration failed",
+        text: error.response.data.message || "Please try again later.",
       });
     }
   };
@@ -57,9 +57,9 @@ export const AuthProvider = ({ children }) => {
         setIsAdmin(true);
       }
       Swal.fire({
-        icon: 'success',
-        title: 'Logged in successfully!',
-        text: 'Welcome back!',
+        icon: "success",
+        title: "Logged in successfully!",
+        text: "Welcome back!",
       });
     } catch (error) {
       if (Array.isArray(error.response.data)) {
@@ -67,9 +67,9 @@ export const AuthProvider = ({ children }) => {
       }
       setErrors([error.response.data.message]);
       Swal.fire({
-        icon: 'error',
-        title: 'Login failed',
-        text: error.response.data.message || 'Please try again later.',
+        icon: "error",
+        title: "Login failed",
+        text: error.response.data.message || "Please try again later.",
       });
     }
   };
@@ -80,9 +80,9 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setIsAdmin(false);
     Swal.fire({
-      icon: 'success',
-      title: 'Logged out successfully!',
-      text: 'See you next time!',
+      icon: "success",
+      title: "Logged out successfully!",
+      text: "See you next time!",
     });
   };
 
