@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
+import Loader from "../components/Loader";
 import Swal from "sweetalert2";
 
 export const AuthContext = createContext();
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [spinner, setSpinner] = useState(false);
 
   const singup = async (user) => {
     try {
@@ -47,6 +49,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signin = async (user) => {
+    setSpinner(true);
     try {
       const res = await loginRequest(user);
       const { token } = res.data;
@@ -71,6 +74,8 @@ export const AuthProvider = ({ children }) => {
         title: "Login failed",
         text: error.response.data.message || "Please try again later.",
       });
+    }finally {
+      setSpinner(false);
     }
   };
 
@@ -144,6 +149,7 @@ export const AuthProvider = ({ children }) => {
         isAdmin,
       }}
     >
+      {spinner && <Loader />}
       {children}
     </AuthContext.Provider>
   );
